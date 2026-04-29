@@ -82,6 +82,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 48px 40px;
+    padding: 40px 60px;
   }
 
   /* ── CARD ── */
@@ -92,38 +93,34 @@
     gap: 14px;
     text-decoration: none;
     color: inherit;
-    max-width: 85%;
-    justify-self: center;
   }
 
   .card-paper {
-    position: relative;
     width: 100%;
-    padding: 0;
+    aspect-ratio: 3 / 4;
+    position: relative;
+    overflow: hidden;
   }
 
   .tape {
     position: absolute;
     top: -12px;
     left: 50%;
-    transform: translateX(-50%) rotate(-8deg);
+    transform: translateX(-50%) rotate(+10deg);
     width: 55px;
     opacity: 0.92;
     pointer-events: none;
     z-index: 2;
   }
 
-  .card-img {
+  .card-img, .card-placeholder {
     width: 100%;
-    aspect-ratio: 3 / 4;
+    height: 100%;
     object-fit: cover;
     display: block;
   }
 
-  /* placeholder when no image supplied */
   .card-placeholder {
-    width: 100%;
-    aspect-ratio: 3 / 4;
     background: #ede9da;
   }
 
