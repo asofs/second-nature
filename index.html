@@ -1,0 +1,314 @@
+<!--
+  HOW TO ADD A NEW POST:
+
+  1. Add your card image to images/ (600x800px, 3:4 ratio, PNG or JPG)
+  2. Duplicate posts/template.html, rename it posts/your-post-name.html
+  3. Fill in the title, subtitle, article text, and update the 3 tape image srcs
+  4. In index.html: copy one existing <a class="card"> block, update the image src, title, and href
+  5. Commit: git add . && git commit -m "add post: your-topic"
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Second Nature</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #f5f3e4;
+    --text: #2a2a2a;
+    --text-light: #666;
+    --tape: rgba(230, 218, 170, 0.85);
+    --tape-border: rgba(200, 185, 130, 0.6);
+    --card-bg: #faf9f4;
+    --card-shadow: rgba(0,0,0,0.08);
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Cormorant Garamond', serif;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 32px 60px 0;
+    position: relative;
+  }
+
+  nav a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+
+  nav a:hover {
+    color: var(--text-light);
+  }
+
+  .site-title {
+    font-family: 'IM Fell English', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  /* ── GALLERY ── */
+  main {
+    padding: 52px 52px 80px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 52px;
+    column-gap: 32px;
+  }
+
+  /* ── CARD ── */
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .card-paper {
+    position: relative;
+    width: 100%;
+    background: var(--card-bg);
+    box-shadow: 2px 3px 14px var(--card-shadow);
+    padding: 10px 10px 14px;
+    transition: transform 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .card:hover .card-paper {
+    transform: translateY(-3px) rotate(0.3deg);
+    box-shadow: 4px 8px 22px rgba(0,0,0,0.12);
+  }
+
+  /* tape strip */
+  .card-paper::before {
+    content: '';
+    position: absolute;
+    top: -11px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 52px;
+    height: 20px;
+    background: var(--tape);
+    border: 0.5px solid var(--tape-border);
+    border-radius: 1px;
+    z-index: 2;
+  }
+
+  /* slight torn-paper lower edge on some cards for variety */
+  .card:nth-child(3n+1) .card-paper::before { transform: translateX(-50%) rotate(-2deg); left: 45%; }
+  .card:nth-child(3n+2) .card-paper::before { transform: translateX(-50%) rotate(1.5deg); }
+  .card:nth-child(3n+3) .card-paper::before { transform: translateX(-50%) rotate(-0.5deg); left: 55%; }
+
+  .card-img {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* placeholder when no image supplied */
+  .card-placeholder {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background: #ede9da;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card-placeholder svg {
+    opacity: 0.35;
+    width: 60%;
+    height: 60%;
+  }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--text);
+    text-align: center;
+    letter-spacing: 0.02em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 24px 24px 0; }
+    main { padding-left: 20px; padding-right: 20px; }
+    .gallery { grid-template-columns: repeat(2, 1fr); column-gap: 20px; row-gap: 40px; }
+    .site-title { font-size: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">archive</a>
+  <a href="index.html" class="site-title">Second Nature</a>
+  <a href="#">about</a>
+</nav>
+
+<main>
+  <div class="gallery">
+
+    <!-- Each .card represents one article entry.
+         To add a real image: replace the .card-placeholder div with:
+         <img class="card-img" src="your-image.png" alt="title">
+         Recommended image size: 600×800px (3:4 ratio), PNG or JPG. -->
+
+    <a class="card" href="posts/poppy.html">
+      <div class="card-paper">
+        <div class="card-placeholder">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <path d="M60 155 Q57 120 54 90 Q51 65 60 48" stroke="#5a7a3a" stroke-width="2" fill="none"/>
+            <path d="M57 118 Q40 105 35 86 Q50 92 57 108Z" fill="#6a8a4a" opacity="0.75"/>
+            <ellipse cx="60" cy="40" rx="17" ry="22" fill="#c0392b" opacity="0.78" transform="rotate(-18 60 40)"/>
+            <ellipse cx="60" cy="40" rx="17" ry="22" fill="#e74c3c" opacity="0.68" transform="rotate(42 60 40)"/>
+            <ellipse cx="60" cy="40" rx="17" ry="22" fill="#c0392b" opacity="0.75" transform="rotate(102 60 40)"/>
+            <ellipse cx="60" cy="40" rx="17" ry="22" fill="#e74c3c" opacity="0.62" transform="rotate(-78 60 40)"/>
+            <circle cx="60" cy="40" r="10" fill="#2c3e50" opacity="0.9"/>
+            <circle cx="60" cy="40" r="6" fill="#1a252f"/>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">the opium poppy</span>
+    </a>
+
+    <a class="card" href="posts/eye.html">
+      <div class="card-paper">
+        <div class="card-placeholder">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="78" r="45" fill="none" stroke="#c8a84b" stroke-width="0.6" opacity="0.7"/>
+            <polygon points="60,40 88,92 32,92" fill="#d4c090" opacity="0.2" stroke="#a0895a" stroke-width="0.8"/>
+            <ellipse cx="60" cy="70" rx="20" ry="10" fill="white" opacity="0.9" stroke="#8c7a60" stroke-width="0.5"/>
+            <ellipse cx="60" cy="70" rx="10" ry="9.5" fill="#4a6741" opacity="0.85"/>
+            <circle cx="60" cy="70" r="5" fill="#1a2a1a"/>
+            <circle cx="57" cy="67" r="1.5" fill="white" opacity="0.6"/>
+            <text x="60" y="112" font-family="serif" font-size="8" fill="#8c7a60" text-anchor="middle" font-style="italic" opacity="0.7">Annuit Cœptis</text>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">the radiant eye</span>
+    </a>
+
+    <a class="card" href="posts/mushroom.html">
+      <div class="card-paper">
+        <div class="card-placeholder">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <line x1="12" y1="128" x2="108" y2="128" stroke="#8c7a60" stroke-width="0.5" opacity="0.4"/>
+            <rect x="53" y="92" width="14" height="36" fill="#d4c090" rx="3"/>
+            <ellipse cx="60" cy="90" rx="32" ry="10" fill="#8b4513" opacity="0.88"/>
+            <ellipse cx="60" cy="83" rx="30" ry="20" fill="#a0522d"/>
+            <ellipse cx="60" cy="81" rx="27" ry="18" fill="#b8622d"/>
+            <circle cx="51" cy="74" r="5" fill="#f5f0e8" opacity="0.7"/>
+            <circle cx="66" cy="71" r="3.5" fill="#f5f0e8" opacity="0.65"/>
+            <circle cx="56" cy="66" r="3" fill="#f5f0e8" opacity="0.6"/>
+            <text x="60" y="153" font-family="serif" font-size="8" fill="#8c7a60" text-anchor="middle" font-style="italic" opacity="0.7">Amanita muscaria</text>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">fly agaric</span>
+    </a>
+
+    <a class="card" href="posts/stars.html">
+      <div class="card-paper">
+        <div class="card-placeholder" style="background:#12122a;">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="30" cy="20" r="0.8" fill="white" opacity="0.7"/><circle cx="90" cy="15" r="1" fill="white" opacity="0.8"/>
+            <circle cx="110" cy="40" r="0.7" fill="white" opacity="0.6"/><circle cx="10" cy="50" r="0.8" fill="white" opacity="0.5"/>
+            <circle cx="60" cy="82" r="42" fill="none" stroke="#c8a84b" stroke-width="0.55" opacity="0.55"/>
+            <circle cx="35" cy="48" r="2" fill="#ffd" opacity="0.9"/>
+            <circle cx="48" cy="60" r="1.5" fill="white" opacity="0.8"/>
+            <circle cx="44" cy="75" r="1.8" fill="white" opacity="0.75"/>
+            <circle cx="60" cy="70" r="2.5" fill="#ffd" opacity="0.95"/>
+            <circle cx="78" cy="62" r="1.5" fill="white" opacity="0.75"/>
+            <polyline points="35,48 48,60 44,75 60,70 78,62" fill="none" stroke="#c8a84b" stroke-width="0.5" opacity="0.55"/>
+            <path d="M52 72 Q44 82 52 92 Q60 82 60 72 Q56 72 52 72Z" fill="#d4c090" opacity="0.4"/>
+            <text x="60" y="150" font-family="serif" font-size="8" fill="#c8b590" text-anchor="middle" font-style="italic" opacity="0.7">Planisphaerium</text>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">the night planisphere</span>
+    </a>
+
+    <a class="card" href="posts/mandrake.html">
+      <div class="card-paper">
+        <div class="card-placeholder">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="60" cy="112" rx="10" ry="17" fill="#c8a87a"/>
+            <path d="M53 125 Q47 138 44 152" stroke="#b89a6a" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M67 125 Q73 138 76 152" stroke="#b89a6a" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <path d="M53 110 Q40 108 32 103" stroke="#b89a6a" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <path d="M67 110 Q80 108 88 103" stroke="#b89a6a" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <circle cx="60" cy="90" r="12" fill="#d4b890"/>
+            <circle cx="55" cy="88" r="2" fill="#8c6a4a"/><circle cx="65" cy="88" r="2" fill="#8c6a4a"/>
+            <path d="M60 83 Q48 62 40 46" stroke="#5a7a3a" stroke-width="2" fill="none"/>
+            <path d="M60 83 Q62 56 60 40" stroke="#5a7a3a" stroke-width="2" fill="none"/>
+            <path d="M60 83 Q72 62 80 46" stroke="#5a7a3a" stroke-width="2" fill="none"/>
+            <ellipse cx="40" cy="43" rx="13" ry="8" fill="#6a8a4a" opacity="0.88" transform="rotate(-32 40 43)"/>
+            <ellipse cx="60" cy="36" rx="12" ry="8" fill="#7a9a5a" opacity="0.85"/>
+            <ellipse cx="80" cy="43" rx="13" ry="8" fill="#6a8a4a" opacity="0.88" transform="rotate(32 80 43)"/>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">mandrake root</span>
+    </a>
+
+    <a class="card" href="posts/ouroboros.html">
+      <div class="card-paper">
+        <div class="card-placeholder">
+          <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="60" cy="78" r="42" fill="none" stroke="#5a7a3a" stroke-width="14" opacity="0.82"/>
+            <circle cx="60" cy="78" r="42" fill="none" stroke="#6a9a4a" stroke-width="9" opacity="0.42"/>
+            <ellipse cx="85" cy="100" rx="11" ry="8" fill="#5a7a3a" transform="rotate(45 85 100)"/>
+            <circle cx="89" cy="93" r="2.2" fill="#f5f0e8"/>
+            <circle cx="89" cy="93" r="1" fill="#1a2a1a"/>
+            <text x="60" y="74" font-family="serif" font-size="10" fill="#8c7a60" text-anchor="middle" font-style="italic" opacity="0.8">ἕν τό</text>
+            <text x="60" y="87" font-family="serif" font-size="10" fill="#8c7a60" text-anchor="middle" font-style="italic" opacity="0.8">πᾶν</text>
+          </svg>
+        </div>
+      </div>
+      <span class="card-title">the ouroboros</span>
+    </a>
+
+  </div>
+</main>
+
+</body>
+</html>
