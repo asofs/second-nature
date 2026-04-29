@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cattle Industry — Second Nature</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Radley:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+    --bg: #fffef0;
+    --text: #2a2a2a;
+    --text-light: #666;
+    --tape: rgba(230, 218, 170, 0.85);
+    --tape-border: rgba(200, 185, 130, 0.6);
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Radley', serif;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ── */
+  nav {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 32px 60px 0;
+    position: relative;
+  }
+
+  nav a {
+    font-family: 'Radley', serif;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.03em;
+  }
+
+  nav a:hover {
+    color: var(--text-light);
+  }
+
+  .site-title {
+    font-family: 'Radley', serif;
+    font-size: 34px;
+    font-weight: 400;
+    color: var(--text);
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  /* ── ARTICLE VIEW ── */
+  .article-view {
+    padding: 0 52px 80px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-block;
+    padding: 28px 0 24px;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-light);
+    text-decoration: none;
+    font-family: 'Radley', serif;
+    letter-spacing: 0.04em;
+  }
+
+  .back-link:hover { color: var(--text); }
+
+  .article-header {
+    text-align: center;
+    padding: 0 0 36px;
+    border-bottom: 0.5px solid rgba(0,0,0,0.12);
+    margin-bottom: 36px;
+  }
+
+  .article-header h1 {
+    font-family: 'Radley', serif;
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+
+  .article-header .subtitle {
+    font-size: 14px;
+    font-style: italic;
+    color: var(--text-light);
+    letter-spacing: 0.06em;
+  }
+
+  /* ── TAPE IMAGES ROW ── */
+  .tape-row {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 44px;
+    padding: 12px 0 4px;
+  }
+
+  .taped-photo {
+    position: relative;
+    background: white;
+    padding: 8px 8px 24px;
+    box-shadow: 2px 3px 12px rgba(0,0,0,0.1);
+    flex-shrink: 0;
+  }
+
+  .taped-photo:nth-child(1) { transform: rotate(-2.5deg); }
+  .taped-photo:nth-child(2) { transform: rotate(1.3deg) translateY(-5px); }
+  .taped-photo:nth-child(3) { transform: rotate(-0.8deg) translateY(3px); }
+
+  .taped-photo::before {
+    content: '';
+    position: absolute;
+    top: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 15px;
+    background: var(--tape);
+    border: 0.5px solid var(--tape-border);
+    border-radius: 1px;
+    z-index: 2;
+  }
+
+  .taped-photo img {
+    width: 140px;
+    height: 110px;
+    object-fit: cover;
+    display: block;
+    background: #ede9da;
+  }
+
+  .taped-photo .photo-label {
+    position: absolute;
+    bottom: 6px;
+    left: 0; right: 0;
+    text-align: center;
+    font-size: 10px;
+    font-style: italic;
+    color: #8c7a60;
+    font-family: 'Radley', serif;
+  }
+
+  /* ── ARTICLE BODY ── */
+  .article-body {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+
+  .article-body p {
+    font-size: 17px;
+    line-height: 1.9;
+    color: var(--text);
+    margin-bottom: 22px;
+  }
+
+  .article-body p:first-child::first-letter {
+    font-family: 'Radley', serif;
+    font-size: 58px;
+    line-height: 0.82;
+    float: left;
+    margin-right: 6px;
+    margin-top: 6px;
+    color: var(--text-light);
+  }
+
+  .article-body blockquote {
+    border-left: 1.5px solid rgba(0,0,0,0.18);
+    padding-left: 20px;
+    margin: 26px 0;
+    font-style: italic;
+    color: var(--text-light);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .dot-divider {
+    text-align: center;
+    color: rgba(0,0,0,0.25);
+    letter-spacing: 0.5em;
+    font-size: 14px;
+    margin: 28px 0;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    nav { padding: 24px 24px 0; }
+    .article-view { padding-left: 20px; padding-right: 20px; }
+    .site-title { font-size: 24px; }
+    .tape-row { gap: 14px; }
+    .taped-photo img { width: 100px; height: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html">archive</a>
+  <a href="../index.html" class="site-title">Second Nature</a>
+  <a href="#">about</a>
+</nav>
+
+<div class="article-view">
+  <a class="back-link" href="../index.html">&larr; back to archive</a>
+
+  <div class="article-header">
+    <h1>Cattle Industry</h1>
+    <p class="subtitle">[SUBTITLE]</p>
+  </div>
+
+  <div class="tape-row">
+    <div class="taped-photo">
+      <img src="../assets/placeholder.png" alt="[CAPTION 1]">
+      <span class="photo-label">[CAPTION 1]</span>
+    </div>
+    <div class="taped-photo">
+      <img src="../assets/placeholder.png" alt="[CAPTION 2]">
+      <span class="photo-label">[CAPTION 2]</span>
+    </div>
+    <div class="taped-photo">
+      <img src="../assets/placeholder.png" alt="[CAPTION 3]">
+      <span class="photo-label">[CAPTION 3]</span>
+    </div>
+  </div>
+
+  <div class="article-body">
+    <p>[ARTICLE TEXT — first paragraph. The first letter will automatically become a drop cap.]</p>
+
+    <div class="dot-divider">&middot; &middot; &middot;</div>
+
+    <blockquote>[QUOTE]</blockquote>
+
+    <p>[ARTICLE TEXT — second paragraph.]</p>
+  </div>
+</div>
+
+</body>
+</html>
