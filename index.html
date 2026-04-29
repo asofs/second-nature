@@ -83,6 +83,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 48px 40px;
     padding: 40px 60px;
+    align-items: start;
   }
 
   /* ── CARD ── */
@@ -90,29 +91,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     text-decoration: none;
     color: inherit;
   }
 
   .card-paper {
+    position: relative;
     width: 100%;
     aspect-ratio: 3 / 4;
-    position: relative;
+    overflow: hidden;
   }
 
   .tape {
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 50%;
-    transform: translateX(-50%) rotate(+10deg);
-    width: 80px;
-    opacity: 0.92;
-    pointer-events: none;
+    transform: translateX(-50%) rotate(-6deg);
+    width: 90px;
     z-index: 10;
+    pointer-events: none;
   }
 
-  .card-img, .card-placeholder {
+  .card-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -120,6 +121,8 @@
   }
 
   .card-placeholder {
+    width: 100%;
+    height: 100%;
     background: #ede9da;
   }
 
