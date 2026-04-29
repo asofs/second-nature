@@ -15,7 +15,7 @@
 <title>Second Nature</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Radley:ital@0;1&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after {
     box-sizing: border-box;
@@ -24,19 +24,15 @@
   }
 
   :root {
-    --bg: #f5f3e4;
+    --bg: #fffef0;
     --text: #2a2a2a;
     --text-light: #666;
-    --tape: rgba(230, 218, 170, 0.85);
-    --tape-border: rgba(200, 185, 130, 0.6);
-    --card-bg: #faf9f4;
-    --card-shadow: rgba(0,0,0,0.08);
   }
 
   html, body {
     background: var(--bg);
     color: var(--text);
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Radley', serif;
     min-height: 100vh;
   }
 
@@ -50,7 +46,7 @@
   }
 
   nav a {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Radley', serif;
     font-size: 15px;
     font-weight: 400;
     color: var(--text);
@@ -63,7 +59,7 @@
   }
 
   .site-title {
-    font-family: 'IM Fell English', serif;
+    font-family: 'Radley', serif;
     font-size: 34px;
     font-weight: 400;
     color: var(--text);
@@ -103,36 +99,24 @@
   .card-paper {
     position: relative;
     width: 100%;
-    background: var(--card-bg);
-    box-shadow: 2px 3px 14px var(--card-shadow);
-    padding: 10px 10px 14px;
-    transition: transform 0.22s ease, box-shadow 0.22s ease;
+    padding: 0;
+    transition: transform 0.22s ease;
   }
 
   .card:hover .card-paper {
     transform: translateY(-3px) rotate(0.3deg);
-    box-shadow: 4px 8px 22px rgba(0,0,0,0.12);
   }
 
-  /* tape strip */
-  .card-paper::before {
-    content: '';
+  .tape {
     position: absolute;
-    top: -11px;
+    top: -18px;
     left: 50%;
-    transform: translateX(-50%) rotate(-1deg);
-    width: 52px;
-    height: 20px;
-    background: var(--tape);
-    border: 0.5px solid var(--tape-border);
-    border-radius: 1px;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 80px;
+    opacity: 0.92;
+    pointer-events: none;
     z-index: 2;
   }
-
-  /* slight torn-paper lower edge on some cards for variety */
-  .card:nth-child(3n+1) .card-paper::before { transform: translateX(-50%) rotate(-2deg); left: 45%; }
-  .card:nth-child(3n+2) .card-paper::before { transform: translateX(-50%) rotate(1.5deg); }
-  .card:nth-child(3n+3) .card-paper::before { transform: translateX(-50%) rotate(-0.5deg); left: 55%; }
 
   .card-img {
     width: 100%;
@@ -158,7 +142,7 @@
   }
 
   .card-title {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Radley', serif;
     font-size: 16px;
     font-weight: 400;
     font-style: italic;
@@ -194,6 +178,7 @@
 
     <a class="card" href="posts/poppy.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <path d="M60 155 Q57 120 54 90 Q51 65 60 48" stroke="#5a7a3a" stroke-width="2" fill="none"/>
@@ -212,6 +197,7 @@
 
     <a class="card" href="posts/eye.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <circle cx="60" cy="78" r="45" fill="none" stroke="#c8a84b" stroke-width="0.6" opacity="0.7"/>
@@ -229,6 +215,7 @@
 
     <a class="card" href="posts/mushroom.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <line x1="12" y1="128" x2="108" y2="128" stroke="#8c7a60" stroke-width="0.5" opacity="0.4"/>
@@ -248,6 +235,7 @@
 
     <a class="card" href="posts/stars.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder" style="background:#12122a;">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <circle cx="30" cy="20" r="0.8" fill="white" opacity="0.7"/><circle cx="90" cy="15" r="1" fill="white" opacity="0.8"/>
@@ -269,6 +257,7 @@
 
     <a class="card" href="posts/mandrake.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <ellipse cx="60" cy="112" rx="10" ry="17" fill="#c8a87a"/>
@@ -292,6 +281,7 @@
 
     <a class="card" href="posts/ouroboros.html">
       <div class="card-paper">
+        <img class="tape" src="tape.png">
         <div class="card-placeholder">
           <svg viewBox="0 0 120 160" xmlns="http://www.w3.org/2000/svg">
             <circle cx="60" cy="78" r="42" fill="none" stroke="#5a7a3a" stroke-width="14" opacity="0.82"/>
