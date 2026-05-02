@@ -65,7 +65,7 @@ while (i < lines.length) {
 
   // Collect paragraph lines
   let para = '';
-  while (i < lines.length && lines[i].trim() !== '' && !lines[i].startsWith('TITLE:') && !lines[i].startsWith('SUBTITLE:') && !lines[i].match(/^\[IMAGE:/) && !lines[i].match(/^\[QUOTE:/)) {
+  while (i < lines.length && lines[i].trim() !== '' && !lines[i].startsWith('TITLE:') && !lines[i].startsWith('SUBTITLE:') && !lines[i].startsWith('IMAGE:') && !lines[i].match(/^\[IMAGE:/) && !lines[i].match(/^\[QUOTE:/)) {
     para += (para ? ' ' : '') + lines[i].trim();
     i++;
   }
