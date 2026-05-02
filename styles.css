@@ -188,6 +188,25 @@ main {
   font-style: normal;
 }
 
+.article-body ol,
+.article-body ul {
+  margin: 0 0 20px 0;
+  padding-left: 24px;
+}
+
+.article-body li {
+  font-size: 17px;
+  line-height: 1.9;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.article-body li + p,
+.article-body ol + p,
+.article-body ul + p {
+  margin-top: 20px;
+}
+
 .article-body a {
   color: var(--text);
   text-decoration: underline;
