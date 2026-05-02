@@ -183,6 +183,11 @@ main {
   margin-bottom: 22px;
 }
 
+.article-body strong {
+  font-weight: 600;
+  font-style: italic;
+}
+
 .article-body a {
   color: var(--text);
   text-decoration: underline;

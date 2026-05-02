@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const { marked } = require('marked');
 
+marked.setOptions({ breaks: true, gfm: true });
+
 const input = process.argv[2];
 if (!input) {
   console.log('Usage: node generate-post.js drafts/your-post.md');
