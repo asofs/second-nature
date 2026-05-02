@@ -102,7 +102,23 @@ ${bodyParts.join('\n\n')}
 `;
 
 fs.writeFileSync(outputPath, html);
-console.log(`Generated: ${outputPath}`);
-console.log(`\nNext steps:`);
-console.log(`1. Add a card for "${title}" in index.html`);
-console.log(`2. git add . && git commit -m "add post: ${slug}"`);
+
+// Add card to index.html
+const indexPath = 'index.html';
+let indexHtml = fs.readFileSync(indexPath, 'utf-8');
+
+const cardBlock = `
+    <a class="card" href="posts/${slug}.html">
+      <img class="tape" src="tape.png">
+      <img class="card-img" src="images/${slug}.png" alt="${title.toLowerCase()}">
+      <span class="card-title">${title.toLowerCase()}</span>
+    </a>
+`;
+
+const marker = '<!-- ADD NEW CARDS HERE, AT THE TOP OF THIS LIST -->';
+indexHtml = indexHtml.replace(marker, marker + '\n' + cardBlock);
+fs.writeFileSync(indexPath, indexHtml);
+
+console.log(`\u2713 Created ${outputPath}`);
+console.log(`\u2713 Added card to index.html`);
+console.log(`\u2192 Don't forget to add your image to images/${slug}.png`);
