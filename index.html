@@ -2,10 +2,9 @@
   HOW TO ADD A NEW POST:
 
   1. Add your card image to images/ (600x800px, 3:4 ratio, PNG or JPG)
-  2. Duplicate posts/template.html, rename it posts/your-post-name.html
-  3. Fill in the title, subtitle, article text, and update the 3 tape image srcs
-  4. In index.html: copy one existing <a class="card"> block, update the image src, title, and href
-  5. Commit: git add . && git commit -m "add post: your-topic"
+  2. Create drafts/your-post-name.md with TITLE:, SUBTITLE:, IMAGE: fields
+  3. Run: node generate-post.js drafts/your-post-name.md
+  4. Commit: git add . && git commit -m "add post: your-topic"
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -29,7 +28,7 @@
 
     <!-- ADD NEW CARDS HERE, AT THE TOP OF THIS LIST -->
 
-    <a class="card" href="posts/computers.html">
+    <a class="card" href="posts/computers/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -40,7 +39,7 @@
     </a>
 
 
-    <a class="card" href="posts/chanterelles.html">
+    <a class="card" href="posts/chanterelles/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -50,7 +49,7 @@
       <span class="card-title">chanterelles</span>
     </a>
 
-    <a class="card" href="posts/cattle-industry.html">
+    <a class="card" href="posts/cattle-industry/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -60,7 +59,7 @@
       <span class="card-title">cattle industry</span>
     </a>
 
-    <a class="card" href="posts/saffron.html">
+    <a class="card" href="posts/saffron/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -70,7 +69,7 @@
       <span class="card-title">saffron</span>
     </a>
 
-    <a class="card" href="posts/mars.html">
+    <a class="card" href="posts/mars/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -80,7 +79,7 @@
       <span class="card-title">mars</span>
     </a>
 
-    <a class="card" href="posts/hand-held-lasers.html">
+    <a class="card" href="posts/hand-held-lasers/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -90,7 +89,7 @@
       <span class="card-title">hand held lasers</span>
     </a>
 
-    <a class="card" href="posts/citrus.html">
+    <a class="card" href="posts/citrus/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -100,7 +99,7 @@
       <span class="card-title">citrus</span>
     </a>
 
-    <a class="card" href="posts/los-angeles.html">
+    <a class="card" href="posts/los-angeles/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -110,7 +109,7 @@
       <span class="card-title">los angeles</span>
     </a>
 
-    <a class="card" href="posts/vallotton.html">
+    <a class="card" href="posts/vallotton/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
@@ -120,14 +119,14 @@
       <span class="card-title">vallotton</span>
     </a>
 
-    <a class="card" href="posts/brassicas.html">
+    <a class="card" href="posts/brassicas/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
           <img class="card-img" src="images/brassicas.png" alt="brassicas">
         </div>
       </div>
-      <span class="card-title">chanterelles</span>
+      <span class="card-title">brassicas</span>
     </a>
 
   </div>

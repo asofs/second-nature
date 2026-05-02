@@ -58,11 +58,11 @@ for (const block of blocks) {
   // Check for [IMAGE: path, width%]
   const imageMatch = trimmed.match(/^\[IMAGE:\s*(.+?),\s*(\d+)%\]$/);
   if (imageMatch) {
-    const imgPath = imageMatch[1].trim();
+    const imgPath = imageMatch[1].trim().replace(/^\.\.\//, '../../');
     const width = imageMatch[2];
     bodyParts.push(
       `    <div class="article-img" style="width: ${width}%;">\n` +
-      `      <img class="tape" src="../tape.png">\n` +
+      `      <img class="tape" src="../../tape.png">\n` +
       `      <img src="${imgPath}" alt="">\n` +
       `    </div>`
     );
@@ -84,7 +84,9 @@ for (const block of blocks) {
 }
 
 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const outputPath = path.join('posts', `${slug}.html`);
+const outputDir = path.join('posts', slug);
+const outputPath = path.join(outputDir, 'index.html');
+if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
 const html = `<!DOCTYPE html>
 <html lang="en">
@@ -92,13 +94,13 @@ const html = `<!DOCTYPE html>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>${title} — Second Nature</title>
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
 
 <nav>
-  <a href="../index.html">archive</a>
-  <a href="../about.html">about</a>
+  <a href="../../index.html">archive</a>
+  <a href="../../about.html">about</a>
 </nav>
 
 <div class="article-view">
@@ -125,12 +127,12 @@ let indexHtml = fs.readFileSync(indexPath, 'utf-8');
 
 const cardImage = image || `${slug}.png`;
 
-if (indexHtml.includes(`href="posts/${slug}.html"`)) {
+if (indexHtml.includes(`href="posts/${slug}/"`)) {
   console.log(`\u2713 Overwrote ${outputPath}`);
   console.log(`\u2014 Card already exists in index.html, skipped`);
 } else {
   const cardBlock = `
-    <a class="card" href="posts/${slug}.html">
+    <a class="card" href="posts/${slug}/">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
         <div class="card-paper">
