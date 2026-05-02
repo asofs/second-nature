@@ -117,8 +117,12 @@ let indexHtml = fs.readFileSync(indexPath, 'utf-8');
 const cardImage = image || `${slug}.png`;
 const cardBlock = `
     <a class="card" href="posts/${slug}.html">
-      <img class="tape" src="tape.png">
-      <img class="card-img" src="images/${cardImage}" alt="${title.toLowerCase()}">
+      <div class="card-wrapper">
+        <img class="tape" src="tape.png">
+        <div class="card-paper">
+          <img class="card-img" src="images/${cardImage}" alt="${title.toLowerCase()}">
+        </div>
+      </div>
       <span class="card-title">${title.toLowerCase()}</span>
     </a>
 `;
