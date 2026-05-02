@@ -183,6 +183,16 @@ main {
   margin-bottom: 22px;
 }
 
+.article-body a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.article-body a:hover {
+  color: var(--text-light);
+}
+
 
 .article-img {
   position: relative;

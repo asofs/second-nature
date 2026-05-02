@@ -2,6 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { marked } = require('marked');
 
 const input = process.argv[2];
 if (!input) {
@@ -12,68 +13,72 @@ if (!input) {
 const raw = fs.readFileSync(input, 'utf-8');
 const lines = raw.split('\n');
 
+// Parse header fields
 let title = '';
 let subtitle = '';
 let image = '';
-const bodyParts = [];
+const bodyLines = [];
+let inBody = false;
 
-let i = 0;
-while (i < lines.length) {
+for (let i = 0; i < lines.length; i++) {
   const line = lines[i];
 
-  if (line.startsWith('TITLE:')) {
-    title = line.replace('TITLE:', '').trim();
-    i++;
-    continue;
+  if (!inBody) {
+    if (line.startsWith('TITLE:')) {
+      title = line.replace('TITLE:', '').trim();
+      continue;
+    }
+    if (line.startsWith('SUBTITLE:')) {
+      subtitle = line.replace('SUBTITLE:', '').trim();
+      continue;
+    }
+    if (line.startsWith('IMAGE:')) {
+      image = line.replace('IMAGE:', '').trim();
+      continue;
+    }
+    // First non-header, non-empty line starts the body
+    if (line.trim() === '') continue;
+    inBody = true;
   }
 
-  if (line.startsWith('SUBTITLE:')) {
-    subtitle = line.replace('SUBTITLE:', '').trim();
-    i++;
-    continue;
-  }
+  bodyLines.push(line);
+}
 
-  if (line.startsWith('IMAGE:')) {
-    image = line.replace('IMAGE:', '').trim();
-    i++;
-    continue;
-  }
+// Process body: split into blocks by special tags vs markdown content
+const bodyContent = bodyLines.join('\n');
+const blocks = bodyContent.split('\n\n');
+const bodyParts = [];
 
-  const imageMatch = line.match(/^\[IMAGE:\s*(.+?),\s*(\d+)%\]$/);
+for (const block of blocks) {
+  const trimmed = block.trim();
+  if (!trimmed) continue;
+
+  // Check for [IMAGE: path, width%]
+  const imageMatch = trimmed.match(/^\[IMAGE:\s*(.+?),\s*(\d+)%\]$/);
   if (imageMatch) {
     const imgPath = imageMatch[1].trim();
     const width = imageMatch[2];
     bodyParts.push(
-      `    <div class="article-img" style="width: ${width}%;">` +
-      `\n      <img class="tape" src="../tape.png">` +
-      `\n      <img src="${imgPath}" alt="">` +
-      `\n    </div>`
+      `    <div class="article-img" style="width: ${width}%;">\n` +
+      `      <img class="tape" src="../tape.png">\n` +
+      `      <img src="${imgPath}" alt="">\n` +
+      `    </div>`
     );
-    i++;
     continue;
   }
 
-  const quoteMatch = line.match(/^\[QUOTE:\s*(.+)\]$/);
+  // Check for [QUOTE: text]
+  const quoteMatch = trimmed.match(/^\[QUOTE:\s*(.+)\]$/s);
   if (quoteMatch) {
     bodyParts.push(`    <blockquote>${quoteMatch[1].trim()}</blockquote>`);
-    i++;
     continue;
   }
 
-  if (line.trim() === '') {
-    i++;
-    continue;
-  }
-
-  // Collect paragraph lines
-  let para = '';
-  while (i < lines.length && lines[i].trim() !== '' && !lines[i].startsWith('TITLE:') && !lines[i].startsWith('SUBTITLE:') && !lines[i].startsWith('IMAGE:') && !lines[i].match(/^\[IMAGE:/) && !lines[i].match(/^\[QUOTE:/)) {
-    para += (para ? ' ' : '') + lines[i].trim();
-    i++;
-  }
-  if (para) {
-    bodyParts.push(`    <p>${para}</p>`);
-  }
+  // Parse as markdown
+  const htmlBlock = marked(trimmed).trim();
+  // Indent each line for clean formatting
+  const indented = htmlBlock.split('\n').map(l => '    ' + l).join('\n');
+  bodyParts.push(indented);
 }
 
 const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
