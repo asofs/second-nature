@@ -12,6 +12,7 @@ const lines = raw.split('\n');
 
 let title = '';
 let subtitle = '';
+let image = '';
 const bodyParts = [];
 
 let i = 0;
@@ -26,6 +27,12 @@ while (i < lines.length) {
 
   if (line.startsWith('SUBTITLE:')) {
     subtitle = line.replace('SUBTITLE:', '').trim();
+    i++;
+    continue;
+  }
+
+  if (line.startsWith('IMAGE:')) {
+    image = line.replace('IMAGE:', '').trim();
     i++;
     continue;
   }
@@ -107,10 +114,11 @@ fs.writeFileSync(outputPath, html);
 const indexPath = 'index.html';
 let indexHtml = fs.readFileSync(indexPath, 'utf-8');
 
+const cardImage = image || `${slug}.png`;
 const cardBlock = `
     <a class="card" href="posts/${slug}.html">
       <img class="tape" src="tape.png">
-      <img class="card-img" src="images/${slug}.png" alt="${title.toLowerCase()}">
+      <img class="card-img" src="images/${cardImage}" alt="${title.toLowerCase()}">
       <span class="card-title">${title.toLowerCase()}</span>
     </a>
 `;
@@ -121,4 +129,4 @@ fs.writeFileSync(indexPath, indexHtml);
 
 console.log(`\u2713 Created ${outputPath}`);
 console.log(`\u2713 Added card to index.html`);
-console.log(`\u2192 Don't forget to add your image to images/${slug}.png`);
+console.log(`\u2192 Don't forget to add your image to images/${cardImage}`);

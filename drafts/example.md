@@ -1,5 +1,6 @@
 TITLE: Example Post
 SUBTITLE: A demonstration of all available tags
+IMAGE: example-post.png
 
 This is the first paragraph. Just write plain text and it becomes a <p> tag. Multiple lines without a blank line between them will be joined into one paragraph.
 
