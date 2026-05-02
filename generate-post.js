@@ -117,12 +117,17 @@ ${bodyParts.join('\n\n')}
 
 fs.writeFileSync(outputPath, html);
 
-// Add card to index.html
+// Add card to index.html (skip if already exists)
 const indexPath = 'index.html';
 let indexHtml = fs.readFileSync(indexPath, 'utf-8');
 
 const cardImage = image || `${slug}.png`;
-const cardBlock = `
+
+if (indexHtml.includes(`href="posts/${slug}.html"`)) {
+  console.log(`\u2713 Overwrote ${outputPath}`);
+  console.log(`\u2014 Card already exists in index.html, skipped`);
+} else {
+  const cardBlock = `
     <a class="card" href="posts/${slug}.html">
       <div class="card-wrapper">
         <img class="tape" src="tape.png">
@@ -134,10 +139,12 @@ const cardBlock = `
     </a>
 `;
 
-const marker = '<!-- ADD NEW CARDS HERE, AT THE TOP OF THIS LIST -->';
-indexHtml = indexHtml.replace(marker, marker + '\n' + cardBlock);
-fs.writeFileSync(indexPath, indexHtml);
+  const marker = '<!-- ADD NEW CARDS HERE, AT THE TOP OF THIS LIST -->';
+  indexHtml = indexHtml.replace(marker, marker + '\n' + cardBlock);
+  fs.writeFileSync(indexPath, indexHtml);
 
-console.log(`\u2713 Created ${outputPath}`);
-console.log(`\u2713 Added card to index.html`);
+  console.log(`\u2713 Created ${outputPath}`);
+  console.log(`\u2713 Added card to index.html`);
+}
+
 console.log(`\u2192 Don't forget to add your image to images/${cardImage}`);
