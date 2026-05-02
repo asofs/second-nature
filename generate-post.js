@@ -1,3 +1,5 @@
+// to run script, call node generate-post.js drafts/computers.md when in second-nature
+
 const fs = require('fs');
 const path = require('path');
 
